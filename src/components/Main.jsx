@@ -1,34 +1,19 @@
 import { useState } from 'react'
 
-// const ingredientArray = JSON.parse(localStorage.getItem('ings')) || []
-
-// const ingredientListFunc = () => {
-//   const ingredientItems = ingredientArray.map((item) => {
-//     return <li key={item}>{item}</li>
-//   })
-//   return ingredientItems
-// }
-
 export default function () {
   const [ingredients, setIngredients] = useState([])
   const ingredientItems = ingredients.map(item => <li key={item}>{item}</li>)
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
+  const addNewIngredient = (formData) => {
     const ingredient = formData.get('ingredient')
-
     if (ingredient.length >= 3) {
-      // ingredientArray.push(ingredient)
-      // localStorage.setItem('ings', JSON.stringify(ingredientArray))
-      // setIngredients(ingredientListFunc)
       setIngredients(ingredients => [...ingredients, ingredient])
     }
   }
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
+      <form action={addNewIngredient}>
         <input  
           type="text"
           name="ingredient"
@@ -37,12 +22,19 @@ export default function () {
         />
         <button>Add Ingredient</button>
       </form>
-      <div>
-        <h2>Ingredients:</h2>
-        <ul>
+      <section>
+        <h2>Ingredients on hand:</h2>
+        <ul aria-live="polite">
           {ingredientItems}
         </ul>
-      </div>
+        <div className="get-recipe-container">
+          <div>
+            <h3>Ready for a recipe?</h3>
+            <p>Generate a recipe from your list of ingredients.</p>
+          </div>
+          <button>Get a recipe</button>
+        </div>
+      </section>
     </main>
   )
 }
