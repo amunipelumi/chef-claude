@@ -49,7 +49,7 @@ main > form {
   display: flex;
 }
 
-main > div {
+main > section {
   width: 100%;
   flex-grow: 1;
   margin-top: 30px;
@@ -81,4 +81,55 @@ main > form > button {
 main > form > button::before {
   content: "+";
   margin-right: 5px;
+}
+
+main > section > h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+main > section > ul {
+  font-size: 0.5rem;
+}
+
+.get-recipe-container {
+  background-color: rgb(216, 215, 187);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 70px;
+  padding: 10px 40px;
+  height: 80px;
+  border-radius: 7px;
+}
+
+.get-recipe-container > div {
+  width: 80%;
+}
+
+.get-recipe-container > button {
+  background-color: rgba(238, 218, 218, 0.921);
+  width: 20%;
+  min-width: 100px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  border-radius: 7px;
+  outline: none;
+  border: 1px;
+  padding: 8px 6px;
+  white-space: nowrap;  
+}
+
+.get-recipe-container > div > h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.get-recipe-container > div > p {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0;
 }
