@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { aiRecipe } from '../../inference/huggingface'
+
 import Form from './Form'
 import Ingredients from './Ingredients'
 import Recipe from './Recipe'
@@ -6,7 +8,7 @@ import Recipe from './Recipe'
 // All functionalities to compute and render on the homepage
 export default function () {
   const [ingredients, setIngredients] = useState([])
-  const ingredientItems = ingredients.map(item => <li key={item}>{item}</li>)
+  const [recipe, setRecipe] = useState('')
 
   // Collect data from form and add to list ingredients
   const addNewIngredient = (formData) => {
@@ -16,20 +18,23 @@ export default function () {
     }
   }
 
-  // Rendering the recipe recieved
-  const [recipeShown, setRecipeShown] = useState(false)
-  const showRecipe = () => {
-    setRecipeShown(prev => !prev)
+  // Generate recipe from ingredients
+  const getRecipe = async () => {
+    const recipeRes = await aiRecipe(ingredients)
+    setRecipe(recipeRes)
   }
 
   return (
     <main>
       <Form addNewIngredient={addNewIngredient}/>
-      {ingredients.length > 0 && <Ingredients 
-        listItems={ingredientItems}
-        ingredients={ingredients}
-        show={showRecipe}/>}
-      {recipeShown ? <Recipe /> : null}
+      {
+        ingredients.length > 0 && <Ingredients 
+        ingredients={ingredients} 
+        getRecipe={getRecipe}/>
+      }
+      {
+        recipe && <Recipe recipe={recipe}/>
+      }
     </main>
   )
 }
