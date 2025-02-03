@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { aiRecipe } from '../../inference/huggingface'
 
 import Form from './Form'
@@ -9,6 +9,7 @@ import Recipe from './Recipe'
 export default function () {
   const [ingredients, setIngredients] = useState([])
   const [recipe, setRecipe] = useState('')
+  const givenRecipe = useRef(null)
 
   // Collect data from form and add to list ingredients
   const addNewIngredient = (formData) => {
@@ -24,6 +25,13 @@ export default function () {
     setRecipe(recipeRes)
   }
 
+  // Scroll to recipe section
+  useEffect(() => {
+    recipe && givenRecipe.current.scrollIntoView(
+      { behavior: 'smooth' }
+    )
+  }, [recipe])
+
   return (
     <main>
       <Form addNewIngredient={addNewIngredient}/>
@@ -33,7 +41,9 @@ export default function () {
         getRecipe={getRecipe}/>
       }
       {
-        recipe && <Recipe recipe={recipe}/>
+        recipe && <Recipe 
+        ref={givenRecipe}
+        recipe={recipe}/>
       }
     </main>
   )
